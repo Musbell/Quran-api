@@ -250,9 +250,9 @@ paths:
       tags:
         - Verses
       description: |-
-        Get a specific ayah with key. Key is combination of surah number and ayah number. 1:1 is first ayah offirst surah for exampke.
+        Get a specific ayah with key, for exampke 10:5 is 5th ayah of 10th surah.
 
-        10:5 is 5th ayah of 10th surah.
+
       parameters:
         - name: words
           in: query
@@ -278,7 +278,7 @@ paths:
       summary: Get random ayah
       tags:
         - Verses
-      description: "Get a random verse. You can get random verse by `chapter`,`page`, `juz`, `hizb`, `rub el hizb`, `ruku`, `manzil` number, or from whole Quran."
+      description: "Get a random verse."
       parameters:
         - name: words
           in: query
