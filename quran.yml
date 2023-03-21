@@ -1,11 +1,11 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   version: v4
   title: Quran.com API
-  description: ' Documentation of Quran.com v4 API'
+  description: " Documentation of Quran.com v4 API"
   contact:
     name: Quran.com
-    url: 'https://quran.com'
+    url: "https://quran.com"
 host: api.quran.com
 basePath: /api/v4
 schemes:
@@ -14,30 +14,29 @@ schemes:
 produces:
   - application/json
 paths:
-  '/chapters':
+  "/chapters":
     get:
       operationId: Chapters
       summary: List Chapters
       tags:
         - Chapters
-      description: 'Get list of #model:aC7ed7aoTAZEKLCGF.'
+      description: "Get list of #model:aC7ed7aoTAZEKLCGF."
       parameters:
         - name: language
           in: query
           type: string
           default: en
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           schema:
             type: object
             properties:
               chapters:
                 type: array
                 items: {}
-     
-       
-  '/chapters/{id}':
+
+  "/chapters/{id}":
     parameters:
       - name: id
         in: path
@@ -51,18 +50,17 @@ paths:
       summary: Get Chapter
       tags:
         - Chapters
-      description: 'Get details of a single #model:aC7ed7aoTAZEKLCGF.'
+      description: "Get details of a single #model:aC7ed7aoTAZEKLCGF."
       parameters:
         - name: language
           in: query
           type: string
           default: en
       responses:
-        '200':
-          description: ''
- 
-       
-  '/verses/by_chapter/{chapter_number}':
+        "200":
+          description: ""
+
+  "/verses/by_chapter/{chapter_number}":
     parameters:
       - name: chapter_number
         in: path
@@ -76,7 +74,7 @@ paths:
       summary: By Chapter
       tags:
         - Verses
-      description: 'Get list of #model:J83wDRc48FrARPHBY(s) by Chapter / Surah number.'
+      description: "Get list of #model:J83wDRc48FrARPHBY(s) by Chapter / Surah number."
       parameters:
         - name: language
           in: query
@@ -92,22 +90,11 @@ paths:
 
             1 or true will include the words.
           type: string
-          default: 'true'
+          default: "true"
           enum:
-            - 'true'
-            - 'false'
-      
-      
-      
-        - name: word_fields
-          in: query
-          description: 'Comma separated list of word fields if you want to add more fields for each word. '
-          type: string
-       
-        - name: fields
-          in: query
-          description: comma separated  list of ayah fields.
-          type: string
+            - "true"
+            - "false"
+
         - name: page
           in: query
           description: For paginating within the result
@@ -115,21 +102,20 @@ paths:
           default: 1
         - name: per_page
           in: query
-          description: 'records per api call, you can get maximum 50 records. '
+          description: "records per api call, you can get maximum 50 records. "
           type: integer
           default: 10
           minimum: 1
           maximum: 50
       responses:
-        '200':
-          description: ''
-     
-      
-  '/verses/by_page/{page_number}':
+        "200":
+          description: ""
+
+  "/verses/by_page/{page_number}":
     parameters:
       - name: page_number
         in: path
-        description: 'Madani Mushaf page number. Valid range is 1-604 '
+        description: "Madani Mushaf page number. Valid range is 1-604 "
         required: true
         type: integer
         minimum: 1
@@ -157,21 +143,11 @@ paths:
 
             1 or true will include the words.
           type: string
-          default: 'true'
+          default: "true"
           enum:
-            - 'true'
-            - 'false'
-      
-     
-        - name: word_fields
-          in: query
-          description: 'Comma separated list of word fields if you want to add more fields for each word. '
-          type: string
-       
-        - name: fields
-          in: query
-          description: comma separated  list of ayah fields.
-          type: string
+            - "true"
+            - "false"
+
         - name: page
           in: query
           description: For paginating within the result
@@ -179,17 +155,16 @@ paths:
           default: 1
         - name: per_page
           in: query
-          description: 'records per api call, you can get maximum 50 records. '
+          description: "records per api call, you can get maximum 50 records. "
           type: integer
           default: 10
           minimum: 1
           maximum: 50
       responses:
-        '200':
-          description: ''
-  
-      
-  '/verses/by_juz/{juz_number}':
+        "200":
+          description: ""
+
+  "/verses/by_juz/{juz_number}":
     parameters:
       - name: juz_number
         in: path
@@ -218,22 +193,11 @@ paths:
 
             1 or true will include the words.
           type: string
-          default: 'true'
+          default: "true"
           enum:
-            - 'true'
-            - 'false'
-      
-       
-      
-        - name: word_fields
-          in: query
-          description: 'Comma separated list of word fields if you want to add more fields for each word. '
-          type: string
-       
-        - name: fields
-          in: query
-          description: comma separated  list of ayah fields.
-          type: string
+            - "true"
+            - "false"
+
         - name: page
           in: query
           description: For paginating within the result
@@ -241,17 +205,16 @@ paths:
           default: 1
         - name: per_page
           in: query
-          description: 'records per api call, you can get maximum 50 records. '
+          description: "records per api call, you can get maximum 50 records. "
           type: integer
           default: 10
           minimum: 1
           maximum: 50
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
 
-      
-  '/verses/by_hizb/{hizb_number}':
+  "/verses/by_hizb/{hizb_number}":
     parameters:
       - name: hizb_number
         in: path
@@ -281,21 +244,11 @@ paths:
 
             1 or true will include the words.
           type: string
-          default: 'true'
+          default: "true"
           enum:
-            - 'true'
-            - 'false'
-       
-       
-        - name: word_fields
-          in: query
-          description: 'Comma separated list of word fields if you want to add more fields for each word. '
-          type: string
-       
-        - name: fields
-          in: query
-          description: comma separated  list of ayah fields.
-          type: string
+            - "true"
+            - "false"
+
         - name: page
           in: query
           description: For paginating within the result
@@ -303,21 +256,20 @@ paths:
           default: 1
         - name: per_page
           in: query
-          description: 'records per api call, you can get maximum 50 records. '
+          description: "records per api call, you can get maximum 50 records. "
           type: integer
           default: 10
           minimum: 1
           maximum: 50
       responses:
-        '200':
-          description: ''
-  
-    
-  '/verses/by_key/{verse_key}':
+        "200":
+          description: ""
+
+  "/verses/by_key/{verse_key}":
     parameters:
       - name: verse_key
         in: path
-        description: 'Verse key ( chapter:verse) '
+        description: "Verse key ( chapter:verse) "
         required: true
         type: string
     get:
@@ -344,33 +296,22 @@ paths:
 
             1 or true will include the words.
           type: string
-          default: 'true'
+          default: "true"
           enum:
-            - 'true'
-            - 'false'
-       
-      
-       
-        - name: word_fields
-          in: query
-          description: 'Comma separated list of word fields if you want to add more fields for each word. '
-          type: string
-       
-        - name: fields
-          in: query
-          description: comma separated  list of ayah fields.
-          type: string
-      responses:
-        '200':
-          description: ''
+            - "true"
+            - "false"
 
-  '/verses/random':
+      responses:
+        "200":
+          description: ""
+
+  "/verses/random":
     get:
       operationId: RandomVerses
       summary: Get random ayah
       tags:
         - Verses
-      description: 'Get a random verse. You can get random verse by `chapter`,`page`, `juz`, `hizb`, `rub el hizb`, `ruku`, `manzil` number, or from whole Quran.'
+      description: "Get a random verse. You can get random verse by `chapter`,`page`, `juz`, `hizb`, `rub el hizb`, `ruku`, `manzil` number, or from whole Quran."
       parameters:
         - name: language
           in: query
@@ -386,50 +327,38 @@ paths:
 
             1 or true will include the words.
           type: string
-          default: 'true'
+          default: "true"
           enum:
-            - 'true'
-            - 'false'
-      
-      
-        - name: word_fields
-          in: query
-          description: 'Comma separated list of word fields if you want to add more fields for each word. '
-          type: string
-       
-        - name: fields
-          in: query
-          description: comma separated  list of ayah fields.
-          type: string
-      responses:
-        '200':
-          description: ''
+            - "true"
+            - "false"
 
-      
-  '/juzs':
+      responses:
+        "200":
+          description: ""
+
+  "/juzs":
     get:
       operationId: Juzs
       summary: Get All Juzs
       tags:
         - Juz
-      description: 'Get list of all #model:XwogxNra8JdvchxBE'
+      description: "Get list of all #model:XwogxNra8JdvchxBE"
       responses:
-        '200':
-         description: ''
-   
-     
-  '/search':
+        "200":
+          description: ""
+
+  "/search":
     get:
       operationId: GET_search
       tags:
         - Search
       consumes:
         - application/json
-      description: 'Search query, you can use *query* as well'
+      description: "Search query, you can use *query* as well"
       parameters:
         - name: q
           in: query
-          description: 'Search query, you can use *query* as well'
+          description: "Search query, you can use *query* as well"
           type: string
         - name: size
           in: query
@@ -438,7 +367,7 @@ paths:
           default: 20
         - name: page
           in: query
-          description: 'Page number, well for pagination. You can use *p* as well'
+          description: "Page number, well for pagination. You can use *p* as well"
           type: number
           default: 0
         - name: language
@@ -449,8 +378,8 @@ paths:
           type: string
           default: en
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
 
 tags:
   - name: Search
