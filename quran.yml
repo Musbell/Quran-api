@@ -76,39 +76,6 @@ paths:
           enabled: false
           dynamic: false
           statusCode: 200
-  '/chapters/{chapter_id}/info':
-    parameters:
-      - name: chapter_id
-        in: path
-        description: Chapter number ( 1-114 )
-        required: true
-        type: integer
-        minimum: 1
-        maximum: 114
-    get:
-      operationId: ChapterInfoById
-      summary: Chapter Info
-      tags:
-        - Chapters
-      description: 'Get #model:wc8vsnXdQpa7bpWa4 in specific language. Default to `English`.'
-      parameters:
-        - name: language
-          in: query
-          type: string
-          default: en
-      responses:
-        '200':
-          description: ''
-          
-      x-stoplight:
-        id: info
-        beforeScript: null
-        afterScript: null
-        public: true
-        mock:
-          enabled: false
-          dynamic: false
-          statusCode: 200
   '/verses/by_chapter/{chapter_number}':
     parameters:
       - name: chapter_number
