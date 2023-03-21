@@ -927,7 +927,7 @@ paths:
           statusCode: 20
   '/search':
     get:
-      operationId: GET_search
+      operationId: Search
       tags:
         - Search
       consumes:
