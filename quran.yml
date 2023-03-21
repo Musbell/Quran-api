@@ -21,11 +21,7 @@ paths:
       tags:
         - Chapters
       description: "Get list of #model:aC7ed7aoTAZEKLCGF."
-      parameters:
-        - name: language
-          in: query
-          type: string
-          default: en
+
       responses:
         "200":
           description: ""
@@ -51,11 +47,7 @@ paths:
       tags:
         - Chapters
       description: "Get details of a single #model:aC7ed7aoTAZEKLCGF."
-      parameters:
-        - name: language
-          in: query
-          type: string
-          default: en
+
       responses:
         "200":
           description: ""
@@ -76,11 +68,6 @@ paths:
         - Verses
       description: "Get list of #model:J83wDRc48FrARPHBY(s) by Chapter / Surah number."
       parameters:
-        - name: language
-          in: query
-          description: Language to fetch word translation in specific language.
-          type: string
-          default: en
         - name: words
           in: query
           description: |-
@@ -129,11 +116,6 @@ paths:
         - Verses
       description: Get all verses of a specific Madani Mushaf page(1 to 604)
       parameters:
-        - name: language
-          in: query
-          description: Language to fetch word translation in specific language.
-          type: string
-          default: en
         - name: words
           in: query
           description: |-
@@ -179,11 +161,6 @@ paths:
         - Verses
       description: Get all verses from a specific juz(1-30).
       parameters:
-        - name: language
-          in: query
-          description: Language to fetch word translation in specific language.
-          type: string
-          default: en
         - name: words
           in: query
           description: |-
@@ -230,11 +207,6 @@ paths:
         - Verses
       description: Get all verses from a specific Hizb( half(1-60).
       parameters:
-        - name: language
-          in: query
-          description: Language to fetch word translation in specific language.
-          type: string
-          default: en
         - name: words
           in: query
           description: |-
@@ -282,11 +254,6 @@ paths:
 
         10:5 is 5th ayah of 10th surah.
       parameters:
-        - name: language
-          in: query
-          description: Language to fetch word translation in specific language.
-          type: string
-          default: en
         - name: words
           in: query
           description: |-
@@ -313,11 +280,6 @@ paths:
         - Verses
       description: "Get a random verse. You can get random verse by `chapter`,`page`, `juz`, `hizb`, `rub el hizb`, `ruku`, `manzil` number, or from whole Quran."
       parameters:
-        - name: language
-          in: query
-          description: Language to fetch word translation in specific language.
-          type: string
-          default: en
         - name: words
           in: query
           description: |-
@@ -370,13 +332,7 @@ paths:
           description: "Page number, well for pagination. You can use *p* as well"
           type: number
           default: 0
-        - name: language
-          in: query
-          description: |-
-            ISO code of language, use this query params if you want to boost translations for specific language.
-            For list of available language see  #endpoint:8rjMCZEyPEZMHAKz9 endpoint.
-          type: string
-          default: en
+
       responses:
         "200":
           description: ""
