@@ -1,0 +1,1730 @@
+swagger: '2.0'
+info:
+  version: v4
+  title: Quran.com API
+  description: ' Documentation of Quran.com v4 API'
+  contact:
+    name: Quran.com
+    url: 'https://quran.com'
+host: api.quran.com
+basePath: /api/v4
+schemes:
+  - https
+  - http
+produces:
+  - application/json
+paths:
+  '/chapters':
+    get:
+      operationId: Chapters
+      summary: List Chapters
+      tags:
+        - Chapters
+      description: 'Get list of #model:aC7ed7aoTAZEKLCGF.'
+      parameters:
+        - name: language
+          in: query
+          type: string
+          default: en
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              chapters:
+                type: array
+                items: {}
+          examples:
+            application/json:
+              chapters:
+                - id: 1
+                  revelation_place: makkah
+                  revelation_order: 5
+                  bismillah_pre: false
+                  name_simple: Al-Fatihah
+                  name_complex: Al-Fātiĥah
+                  name_arabic: الفاتحة
+                  verses_count: 7
+                  pages:
+                    - 1
+                    - 1
+                  translated_name:
+                    language_name: english
+                    name: The Opener
+      x-stoplight:
+        id: LIST-chapters
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 200
+  '/chapters/{id}':
+    parameters:
+      - name: id
+        in: path
+        description: Chapter ID ( 1-114)
+        required: true
+        type: integer
+        minimum: 1
+        maximum: 114
+    get:
+      operationId: ChaptersById
+      summary: Get Chapter
+      tags:
+        - Chapters
+      description: 'Get details of a single #model:aC7ed7aoTAZEKLCGF.'
+      parameters:
+        - name: language
+          in: query
+          type: string
+          default: en
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              chapter:
+                $ref: '#/definitions/chapter'
+          examples:
+            application/json:
+              chapter:
+                id: 1
+                revelation_place: makkah
+                revelation_order: 5
+                bismillah_pre: false
+                name_simple: Al-Fatihah
+                name_complex: Al-Fātiĥah
+                name_arabic: الفاتحة
+                verses_count: 7
+                pages:
+                  - 1
+                  - 1
+                translated_name:
+                  language_name: english
+                  name: The Opener
+      x-stoplight:
+        id: GET-chapter
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 200
+  '/chapters/{chapter_id}/info':
+    parameters:
+      - name: chapter_id
+        in: path
+        description: Chapter number ( 1-114 )
+        required: true
+        type: integer
+        minimum: 1
+        maximum: 114
+    get:
+      operationId: ChapterInfoById
+      summary: Chapter Info
+      tags:
+        - Chapters
+      description: 'Get #model:wc8vsnXdQpa7bpWa4 in specific language. Default to `English`.'
+      parameters:
+        - name: language
+          in: query
+          type: string
+          default: en
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              chapter_info:
+                $ref: '#/definitions/chapter-info'
+          examples:
+            application/json:
+              chapter_info:
+                id: 1
+                chapter_id: 1
+                language_name: english
+                short_text: 'This Surah is named Al-Fatihah because of its subject-matter. Fatihah is that which opens a subject or a book or any other thing. In other words, Al-Fatihah is a sort of preface.'
+                source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Quran
+                text: "<h2>Name</h2>\r\n<p>This Surah is named Al-Fatihah because of its subject-matter. Fatihah is that which opens a subject or a book or any other thing. In other words, Al-Fatihah is a sort of preface.</p>\r\n<h2>Period of Revelation</h2>..."
+      x-stoplight:
+        id: info
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 200
+  '/verses/by_chapter/{chapter_number}':
+    parameters:
+      - name: chapter_number
+        in: path
+        description: Chapter number ( 1  - 114 )
+        required: true
+        type: integer
+        minimum: 1
+        maximum: 114
+    get:
+      operationId: VersesByChapterNumber
+      summary: By Chapter
+      tags:
+        - Verses
+      description: 'Get list of #model:J83wDRc48FrARPHBY(s) by Chapter / Surah number.'
+      parameters:
+        - name: language
+          in: query
+          description: Language to fetch word translation in specific language.
+          type: string
+          default: en
+        - name: words
+          in: query
+          description: |-
+            Include words of each ayah?
+
+            0 or false will not include words.
+
+            1 or true will include the words.
+          type: string
+          default: 'true'
+          enum:
+            - 'true'
+            - 'false'
+        - name: translations
+          in: query
+          description: comma separated ids of translations to load for each ayah.
+          type: string
+        - name: audio
+          in: query
+          description: Id of recitation if you want to load audio of each ayah.
+          type: integer
+        - name: tafsirs
+          in: query
+          description: Comma separated ids of tafisrs to load for each ayah if you want to load tafisrs.
+          type: string
+        - name: word_fields
+          in: query
+          description: 'Comma separated list of word fields if you want to add more fields for each word. '
+          type: string
+        - name: translation_fields
+          in: query
+          description: 'Comma separated list of translation fields if you want to add more fields for each translation. '
+          type: string
+        - name: fields
+          in: query
+          description: comma separated  list of ayah fields.
+          type: string
+        - name: page
+          in: query
+          description: For paginating within the result
+          type: integer
+          default: 1
+        - name: per_page
+          in: query
+          description: 'records per api call, you can get maximum 50 records. '
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 50
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              verses:
+                type: array
+                items:
+                  $ref: '#/definitions/verse'
+              pagination:
+                $ref: '#/definitions/pagination'
+          examples:
+            application/json:
+              verses:
+                - id: 1
+                  verse_number: 1
+                  page_number: 1
+                  verse_key: '1:1'
+                  juz_number: 1
+                  hizb_number: 1
+                  rub_el_hizb_number: 1
+                  sajdah_type: null
+                  sajdah_number: null
+                  words:
+                    - id: 1
+                      position: 1
+                      audio_url: wbw/001_001_001.mp3
+                      char_type_name: word
+                      line_number: 2
+                      page_number: 1
+                      code_v1: '&#xfb51;'
+                      translation:
+                        text: In (the) name
+                        language_name: english
+                      transliteration:
+                        text: bis'mi
+                        language_name: english
+                  translations:
+                    - resource_id: 131
+                      text: 'In the Name of Allah—the Most Compassionate, Most Merciful.'
+                  tafsirs:
+                    - id: 82641
+                      language_name: english
+                      name: Tafsir Ibn Kathir
+                      text: <h2 class="title">Which was revealed in Makkah</h2><h2 class="title">The Meaning of Al-Fatihah and its Various Names</h2>
+              pagination:
+                per_page: 1
+                current_page: 1
+                next_page: 2
+                total_pages: 7
+                total_records: 7
+      x-stoplight:
+        id: GET_verses-bychapter-chapternumber
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 200
+  '/verses/by_page/{page_number}':
+    parameters:
+      - name: page_number
+        in: path
+        description: 'Madani Mushaf page number. Valid range is 1-604 '
+        required: true
+        type: integer
+        minimum: 1
+        exclusiveMinimum: true
+        maximum: 604
+        exclusiveMaximum: false
+    get:
+      operationId: VersesByPageNumber
+      summary: By Page
+      tags:
+        - Verses
+      description: Get all verses of a specific Madani Mushaf page(1 to 604)
+      parameters:
+        - name: language
+          in: query
+          description: Language to fetch word translation in specific language.
+          type: string
+          default: en
+        - name: words
+          in: query
+          description: |-
+            Include words of each ayah?
+
+            0 or false will not include words.
+
+            1 or true will include the words.
+          type: string
+          default: 'true'
+          enum:
+            - 'true'
+            - 'false'
+        - name: translations
+          in: query
+          description: comma separated ids of translations to load for each ayah.
+          type: string
+        - name: audio
+          in: query
+          description: Id of recitation if you want to load audio of each ayah.
+          type: integer
+        - name: tafsirs
+          in: query
+          description: Comma separated ids of tafisrs to load for each ayah if you want to load tafisrs.
+          type: string
+        - name: word_fields
+          in: query
+          description: 'Comma separated list of word fields if you want to add more fields for each word. '
+          type: string
+        - name: translation_fields
+          in: query
+          description: 'Comma separated list of translation fields if you want to add more fields for each translation. '
+          type: string
+        - name: fields
+          in: query
+          description: comma separated  list of ayah fields.
+          type: string
+        - name: page
+          in: query
+          description: For paginating within the result
+          type: integer
+          default: 1
+        - name: per_page
+          in: query
+          description: 'records per api call, you can get maximum 50 records. '
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 50
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              verses:
+                type: array
+                items:
+                  $ref: '#/definitions/verse'
+              pagination:
+                $ref: '#/definitions/pagination'
+          examples:
+            application/json:
+              verses:
+                - id: 1
+                  verse_number: 1
+                  page_number: 1
+                  verse_key: '1:1'
+                  juz_number: 1
+                  hizb_number: 1
+                  rub_el_hizb_number: 1
+                  sajdah_type: null
+                  sajdah_number: null
+                  words:
+                    - id: 1
+                      position: 1
+                      audio_url: wbw/001_001_001.mp3
+                      char_type_name: word
+                      line_number: 2
+                      page_number: 1
+                      code_v1: '&#xfb51;'
+                      translation:
+                        text: In (the) name
+                        language_name: english
+                      transliteration:
+                        text: bis'mi
+                        language_name: english
+                  translations:
+                    - resource_id: 131
+                      text: 'In the Name of Allah—the Most Compassionate, Most Merciful.'
+                  tafsirs:
+                    - id: 82641
+                      language_name: english
+                      name: Tafsir Ibn Kathir
+                      text: <h2 class="title">Which was revealed in Makkah</h2><h2 class="title">The Meaning of Al-Fatihah and its Various Names</h2>
+              pagination:
+                per_page: 1
+                current_page: 1
+                next_page: 2
+                total_pages: 7
+                total_records: 7
+      x-stoplight:
+        id: GET_verses-bypage-pagenumber
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 200
+  '/verses/by_juz/{juz_number}':
+    parameters:
+      - name: juz_number
+        in: path
+        required: true
+        type: integer
+        minimum: 1
+        maximum: 30
+    get:
+      operationId: VersesByJuzNumber
+      summary: By Juz
+      tags:
+        - Verses
+      description: Get all verses from a specific juz(1-30).
+      parameters:
+        - name: language
+          in: query
+          description: Language to fetch word translation in specific language.
+          type: string
+          default: en
+        - name: words
+          in: query
+          description: |-
+            Include words of each ayah?
+
+            0 or false will not include words.
+
+            1 or true will include the words.
+          type: string
+          default: 'true'
+          enum:
+            - 'true'
+            - 'false'
+        - name: translations
+          in: query
+          description: comma separated ids of translations to load for each ayah.
+          type: string
+        - name: audio
+          in: query
+          description: Id of recitation if you want to load audio of each ayah.
+          type: integer
+        - name: tafsirs
+          in: query
+          description: Comma separated ids of tafisrs to load for each ayah if you want to load tafisrs.
+          type: string
+        - name: word_fields
+          in: query
+          description: 'Comma separated list of word fields if you want to add more fields for each word. '
+          type: string
+        - name: translation_fields
+          in: query
+          description: 'Comma separated list of translation fields if you want to add more fields for each translation. '
+          type: string
+        - name: fields
+          in: query
+          description: comma separated  list of ayah fields.
+          type: string
+        - name: page
+          in: query
+          description: For paginating within the result
+          type: integer
+          default: 1
+        - name: per_page
+          in: query
+          description: 'records per api call, you can get maximum 50 records. '
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 50
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              verses:
+                type: array
+                items:
+                  $ref: '#/definitions/verse'
+              pagination:
+                $ref: '#/definitions/pagination'
+          examples:
+            application/json:
+              verses:
+                - id: 1
+                  verse_number: 1
+                  page_number: 1
+                  verse_key: '1:1'
+                  juz_number: 1
+                  hizb_number: 1
+                  rub_el_hizb_number: 1
+                  sajdah_type: null
+                  sajdah_number: null
+                  words:
+                    - id: 1
+                      position: 1
+                      audio_url: wbw/001_001_001.mp3
+                      char_type_name: word
+                      line_number: 2
+                      page_number: 1
+                      code_v1: '&#xfb51;'
+                      translation:
+                        text: In (the) name
+                        language_name: english
+                      transliteration:
+                        text: bis'mi
+                        language_name: english
+                  translations:
+                    - resource_id: 131
+                      text: 'In the Name of Allah—the Most Compassionate, Most Merciful.'
+                  tafsirs:
+                    - id: 82641
+                      language_name: english
+                      name: Tafsir Ibn Kathir
+                      text: <h2 class="title">Which was revealed in Makkah</h2><h2 class="title">The Meaning of Al-Fatihah and its Various Names</h2>
+              pagination:
+                per_page: 1
+                current_page: 1
+                next_page: 2
+                total_pages: 7
+                total_records: 7
+      x-stoplight:
+        id: GET_verses-byjuz-juznumber
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 200
+  '/verses/by_hizb/{hizb_number}':
+    parameters:
+      - name: hizb_number
+        in: path
+        description: Hizb number(1-60)
+        required: true
+        type: integer
+        minimum: 1
+        maximum: 60
+    get:
+      operationId: VersesByHizbNumber
+      summary: By Hizb number
+      tags:
+        - Verses
+      description: Get all verses from a specific Hizb( half(1-60).
+      parameters:
+        - name: language
+          in: query
+          description: Language to fetch word translation in specific language.
+          type: string
+          default: en
+        - name: words
+          in: query
+          description: |-
+            Include words of each ayah?
+
+            0 or false will not include words.
+
+            1 or true will include the words.
+          type: string
+          default: 'true'
+          enum:
+            - 'true'
+            - 'false'
+        - name: translations
+          in: query
+          description: comma separated ids of translations to load for each ayah.
+          type: string
+        - name: audio
+          in: query
+          description: Id of recitation if you want to load audio of each ayah.
+          type: integer
+        - name: tafsirs
+          in: query
+          description: Comma separated ids of tafisrs to load for each ayah if you want to load tafisrs.
+          type: string
+        - name: word_fields
+          in: query
+          description: 'Comma separated list of word fields if you want to add more fields for each word. '
+          type: string
+        - name: translation_fields
+          in: query
+          description: 'Comma separated list of translation fields if you want to add more fields for each translation. '
+          type: string
+        - name: fields
+          in: query
+          description: comma separated  list of ayah fields.
+          type: string
+        - name: page
+          in: query
+          description: For paginating within the result
+          type: integer
+          default: 1
+        - name: per_page
+          in: query
+          description: 'records per api call, you can get maximum 50 records. '
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 50
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              verses:
+                type: array
+                items:
+                  $ref: '#/definitions/verse'
+              pagination:
+                $ref: '#/definitions/pagination'
+          examples:
+            application/json:
+              verses:
+                - id: 1
+                  verse_number: 1
+                  page_number: 1
+                  verse_key: '1:1'
+                  juz_number: 1
+                  hizb_number: 1
+                  rub_el_hizb_number: 1
+                  sajdah_type: null
+                  sajdah_number: null
+                  words:
+                    - id: 1
+                      position: 1
+                      audio_url: wbw/001_001_001.mp3
+                      char_type_name: word
+                      line_number: 2
+                      page_number: 1
+                      code_v1: '&#xfb51;'
+                      translation:
+                        text: In (the) name
+                        language_name: english
+                      transliteration:
+                        text: bis'mi
+                        language_name: english
+                  translations:
+                    - resource_id: 131
+                      text: 'In the Name of Allah—the Most Compassionate, Most Merciful.'
+                  tafsirs:
+                    - id: 82641
+                      language_name: english
+                      name: Tafsir Ibn Kathir
+                      text: <h2 class="title">Which was revealed in Makkah</h2><h2 class="title">The Meaning of Al-Fatihah and its Various Names</h2>
+              pagination:
+                per_page: 1
+                current_page: 1
+                next_page: 2
+                total_pages: 7
+                total_records: 7
+      x-stoplight:
+        id: GET_verses-byhizb-hizbnumber
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 200
+  '/verses/by_key/{verse_key}':
+    parameters:
+      - name: verse_key
+        in: path
+        description: 'Verse key ( chapter:verse) '
+        required: true
+        type: string
+    get:
+      operationId: VersesByVerseKey
+      summary: By Specific Verse By Key
+      tags:
+        - Verses
+      description: |-
+        Get a specific ayah with key. Key is combination of surah number and ayah number. 1:1 is first ayah offirst surah for exampke.
+
+        10:5 is 5th ayah of 10th surah.
+      parameters:
+        - name: language
+          in: query
+          description: Language to fetch word translation in specific language.
+          type: string
+          default: en
+        - name: words
+          in: query
+          description: |-
+            Include words of each ayah?
+
+            0 or false will not include words.
+
+            1 or true will include the words.
+          type: string
+          default: 'true'
+          enum:
+            - 'true'
+            - 'false'
+        - name: translations
+          in: query
+          description: comma separated ids of translations to load for each ayah.
+          type: string
+        - name: audio
+          in: query
+          description: Id of recitation if you want to load audio of each ayah.
+          type: integer
+        - name: tafsirs
+          in: query
+          description: Comma separated ids of tafisrs to load for each ayah if you want to load tafisrs.
+          type: string
+        - name: word_fields
+          in: query
+          description: 'Comma separated list of word fields if you want to add more fields for each word. '
+          type: string
+        - name: translation_fields
+          in: query
+          description: 'Comma separated list of translation fields if you want to add more fields for each translation. '
+          type: string
+        - name: fields
+          in: query
+          description: comma separated  list of ayah fields.
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              verse:
+                $ref: '#/definitions/verse'
+            required:
+              - verse
+          examples:
+            application/json:
+              verse:
+                id: 1
+                verse_number: 1
+                page_number: 1
+                verse_key: '1:1'
+                juz_number: 1
+                hizb_number: 1
+                rub_el_hizb_number: 1
+                sajdah_type: null
+                sajdah_number: null
+                words:
+                  - id: 1
+                    position: 1
+                    audio_url: wbw/001_001_001.mp3
+                    char_type_name: word
+                    line_number: 2
+                    page_number: 1
+                    code_v1: '&#xfb51;'
+                    translation:
+                      text: In (the) name
+                      language_name: english
+                    transliteration:
+                      text: bis'mi
+                      language_name: english
+                translations:
+                  - resource_id: 131
+                    text: 'In the Name of Allah—the Most Compassionate, Most Merciful.'
+                tafsirs:
+                  - id: 82641
+                    language_name: english
+                    name: Tafsir Ibn Kathir
+                    text: <h2 class="title">Which was revealed in Makkah</h2><h2 class="title">The Meaning of Al-Fatihah and its Various Names</h2>
+      x-stoplight:
+        id: GET_verses-bykey-versekey
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 200
+  '/verses/random':
+    get:
+      operationId: RandomVerses
+      summary: Get random ayah
+      tags:
+        - Verses
+      description: 'Get a random verse. You can get random verse by `chapter`,`page`, `juz`, `hizb`, `rub el hizb`, `ruku`, `manzil` number, or from whole Quran.'
+      parameters:
+        - name: language
+          in: query
+          description: Language to fetch word translation in specific language.
+          type: string
+          default: en
+        - name: words
+          in: query
+          description: |-
+            Include words of each ayah?
+
+            0 or false will not include words.
+
+            1 or true will include the words.
+          type: string
+          default: 'true'
+          enum:
+            - 'true'
+            - 'false'
+        - name: translations
+          in: query
+          description: comma separated ids of translations to load for each ayah.
+          type: string
+        - name: audio
+          in: query
+          description: Id of recitation if you want to load audio of each ayah.
+          type: integer
+        - name: tafsirs
+          in: query
+          description: Comma separated ids of tafisrs to load for each ayah if you want to load tafisrs.
+          type: string
+        - name: word_fields
+          in: query
+          description: 'Comma separated list of word fields if you want to add more fields for each word. '
+          type: string
+        - name: translation_fields
+          in: query
+          description: 'Comma separated list of translation fields if you want to add more fields for each translation. '
+          type: string
+        - name: fields
+          in: query
+          description: comma separated  list of ayah fields.
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              verse:
+                $ref: '#/definitions/verse'
+            required:
+              - verse
+          examples:
+            application/json:
+              verse:
+                id: 1
+                verse_number: 1
+                page_number: 1
+                verse_key: '1:1'
+                juz_number: 1
+                hizb_number: 1
+                rub_el_hizb_number: 1
+                sajdah_type: null
+                sajdah_number: null
+                words:
+                  - id: 1
+                    position: 1
+                    audio_url: wbw/001_001_001.mp3
+                    char_type_name: word
+                    line_number: 2
+                    page_number: 1
+                    code_v1: '&#xfb51;'
+                    translation:
+                      text: In (the) name
+                      language_name: english
+                    transliteration:
+                      text: bis'mi
+                      language_name: english
+                translations:
+                  - resource_id: 131
+                    text: 'In the Name of Allah—the Most Compassionate, Most Merciful.'
+                tafsirs:
+                  - id: 82641
+                    language_name: english
+                    name: Tafsir Ibn Kathir
+                    text: <h2 class="title">Which was revealed in Makkah</h2><h2 class="title">The Meaning of Al-Fatihah and its Various Names</h2>
+      x-stoplight:
+        id: GET_verses-random
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 200
+  '/juzs':
+    get:
+      operationId: Juzs
+      summary: Get All Juzs
+      tags:
+        - Juz
+      description: 'Get list of all #model:XwogxNra8JdvchxBE'
+      responses:
+        '200':
+         description: ''
+         schema:
+            type: object
+            properties:
+              verse:
+                $ref: '#/definitions/juz'
+      x-stoplight:
+        id: GET_juzs
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 20
+  '/search':
+    get:
+      operationId: GET_search
+      tags:
+        - Search
+      consumes:
+        - application/json
+      description: 'Search query, you can use *query* as well'
+      parameters:
+        - name: q
+          in: query
+          description: 'Search query, you can use *query* as well'
+          type: string
+        - name: size
+          in: query
+          description: Results per page. *s* is also valid parameter.
+          type: number
+          default: 20
+        - name: page
+          in: query
+          description: 'Page number, well for pagination. You can use *p* as well'
+          type: number
+          default: 0
+        - name: language
+          in: query
+          description: |-
+            ISO code of language, use this query params if you want to boost translations for specific language.
+            For list of available language see  #endpoint:8rjMCZEyPEZMHAKz9 endpoint.
+          type: string
+          default: en
+      responses:
+        '200':
+          description: ''
+      x-stoplight:
+        id: GET_search
+        beforeScript: null
+        afterScript: null
+        public: true
+        mock:
+          enabled: false
+          dynamic: false
+          statusCode: 200
+tags:
+  - name: Search
+    description: Search
+  - name: Chapters
+    description: Chapters
+  - name: Verses
+    description: Verses
+  - name: Juz
+    description: Juz
+definitions:
+  audiofile:
+    title: AudioFile
+    type: object
+    properties:
+      url:
+        type: string
+      duration:
+        type: number
+      format:
+        type: string
+      segments:
+        type: array
+        items: {}
+    example:
+      url: 'https://verses.quran.com/AbdulBaset/Mujawwad/mp3/001001.mp3'
+      duration: 6
+      format: mp3
+      segments:
+        - - - 0
+            - 120
+            - -1
+          - - 120
+            - 420
+            - 0
+          - - 540
+            - 810
+            - 1
+          - - 1350
+            - 1006
+            - 2
+          - - 2356
+            - 2454
+            - 3
+          - - 4810
+            - 390
+            - -1
+    x-stoplight:
+      id: audiofile
+      name: AudioFile
+      public: true
+  chapter-info:
+    title: Chapter Info
+    type: object
+    properties:
+      chapter_id:
+        type: number
+      text:
+        type: string
+        description: 'Long text of chapter info, this could include html tags for formatting and styling.'
+      short_text:
+        type: string
+      language_name:
+        type: string
+      source:
+        type: string
+        description: 'Name of the source, could be a book name or site name.'
+    required:
+      - chapter_id
+      - text
+      - short_text
+      - source
+    example:
+      chapter_id: 1
+      text: |-
+        <h2>Name</h2>
+        <p>This Surah is named Al-Fatihah because of its subject-matter. Fatihah is that which opens a subject or a book or any other thing. In other words, Al-Fatihah is a sort of preface.</p>...
+      short_text: 'This Surah is named Al-Fatihah because of its subject-matter. Fatihah is that which opens a subject or a book or any other thing. In other words, Al-Fatihah is a sort of preface.'
+      language_name: English
+      source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Quran
+    x-stoplight:
+      id: chapter-info
+      name: Chapter Info
+      public: true
+  translated-name:
+    title: TranslatedName
+    type: object
+    properties:
+      language_name:
+        type: string
+        default: english
+      name:
+        type: string
+        description: Name of the resource in specific language.
+    required:
+      - language_name
+      - name
+    example:
+      language_name: english
+      name: The Opener
+    x-stoplight:
+      id: translated-name
+      name: TranslatedName
+      public: true
+  translation:
+    title: Translation
+    type: object
+    properties:
+      resource_id:
+        type: integer
+      resource_name:
+        type: string
+      id:
+        type: integer
+      text:
+        type: string
+        description: 'Text of the translation, text could have HTML tags for formatting and footnotes. '
+      verse_id:
+        type: integer
+      language_id:
+        type: integer
+      language_name:
+        type: string
+      verse_key:
+        type: string
+      chapter_id:
+        type: integer
+      verse_number:
+        type: integer
+      juz_number:
+        type: integer
+      hizb_number:
+        type: integer
+      rub_el_hizb_number:
+        type: integer
+      page_number:
+        type: integer
+    required:
+      - resource_id
+      - text
+    example:
+      resource_id: 131
+      resource_name: 'Dr. Mustafa Khattab, the Clear Quran'
+      id: 903958
+      text: 'In the Name of Allah—the Most Compassionate, Most Merciful.'
+      verse_id: 1
+      language_id: 38
+      language_name: english
+      verse_key: '1:1'
+      chapter_id: 1
+      verse_number: 1
+      juz_number: 1
+      hizb_number: 1
+      rub_el_hizb_number: 1
+      page_number: 1
+    x-stoplight:
+      id: translation
+      name: Translation
+      public: true
+  verse:
+    title: Verse
+    type: object
+    properties:
+      id:
+        type: integer
+      chapter_id:
+        type: integer
+        description: Chapter number of this verse
+      verse_number:
+        type: integer
+      verse_key:
+        type: string
+        description: 'key of the verse, key is generated using chapter number and ayah number. e.g 1:1 is first ayah of first surah.'
+      verse_index:
+        type: integer
+      text_uthmani:
+        type: string
+        description: |-
+          Ayah text in Uthmani Script.
+
+          Uthmani script is an old-fashion script used by the third Caliph, Uthman, to produce the first standard quran manuscript.
+      text_uthmani_simple:
+        type: string
+        description: 'Uthmani script diacritic marks '
+      text_imlaei:
+        type: string
+        description: |-
+          Ayah text in Imla'ei script.
+
+          Imla'ei script, is the modern Arabic writing style which is currently in use.
+      text_imlaei_simple:
+        type: string
+      text_indopak:
+        type: string
+      text_uthmani_tajweed:
+        type: string
+      juz_number:
+        type: integer
+      hizb_number:
+        type: integer
+      rub_el_hizb_number:
+        type: integer
+      sajdah_type:
+        type: 'null'
+      sajdah_number:
+        type: 'null'
+      page_number:
+        type: integer
+        description: 'page_number is deperacted, please use `v1_page` instead.'
+        minimum: 1
+        maximum: 604
+      image_url:
+        type: string
+      image_width:
+        type: integer
+      words:
+        type: array
+        items:
+          $ref: '#/definitions/word'
+      audio:
+        $ref: '#/definitions/audiofile'
+      translations:
+        type: array
+        items:
+          $ref: '#/definitions/translation'
+      code_v1:
+        type: string
+        description: Glyphs codes for QCF v1 fonts
+      code_v2:
+        type: string
+        description: Glyphs codes for QCF v2 fonts
+      v1_page:
+        type: integer
+        description: 'Madani Muhsaf Page number for v1 font. If `v1_page` value is 2, that means you''ll use page 2 font file to render this ayah using v1 glyph codes.'
+        minimum: 1
+        maximum: 604
+      v2_page:
+        type: integer
+        description: 'Madani Muhsaf Page number for v2 font. If `v2_page` value is 2, that means you''ll use page 2 font file to render this ayah using v2 glyph codes.'
+        minimum: 1
+        maximum: 604
+    required:
+      - id
+      - verse_number
+      - verse_key
+      - juz_number
+      - hizb_number
+      - rub_el_hizb_number
+      - sajdah_type
+      - sajdah_number
+      - page_number
+    example:
+      id: 1
+      chapter_id: 1
+      verse_number: 1
+      verse_key: '1:1'
+      verse_index: 1
+      text_uthmani: بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+      text_uthmani_simple: بسم الله الرحمن الرحيم
+      text_imlaei: بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+      text_imlaei_simple: بسم الله الرحمن الرحيم
+      text_indopak: بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ
+      text_uthmani_tajweed: بِسْمِ <tajweed class=ham_wasl>ٱ</tajweed>للَّهِ <tajweed class=ham_wasl>ٱ</tajweed><tajweed class=laam_shamsiyah>ل</tajweed>رَّحْمَ<tajweed class=madda_normal>ـٰ</tajweed>نِ <tajweed class=ham_wasl>ٱ</tajweed><tajweed class=laam_shamsiyah>ل</tajweed>رَّح<tajweed class=madda_permissible>ِي</tajweed>مِ <span class=end>١</span>
+      juz_number: 1
+      hizb_number: 1
+      rub_el_hizb_number: 1
+      sajdah_type: null
+      sajdah_number: null
+      page_number: 1
+      image_url: //c22506.r6.cf1.rackcdn.com/1_1.png
+      image_width: 675
+      words:
+        - id: 1
+          position: 1
+          audio_url: wbw/001_001_001.mp3
+          char_type_name: word
+          translation:
+            text: In (the) name
+            language_name: english
+          transliteration:
+            text: bis'mi
+            language_name: english
+    x-stoplight:
+      id: verse
+      name: Verse
+      public: true
+  word:
+    title: Word
+    type: object
+    properties:
+      id:
+        type: integer
+      position:
+        type: integer
+        description: Word position within ayah
+      text_uthmani:
+        type: string
+        description: Word text in Uthmanic script
+      text_indopak:
+        type: string
+      text_imlaei:
+        type: string
+        description: Word text in simple/Imlaei script
+      verse_key:
+        type: string
+      page_number:
+        type: integer
+        description: 'page_number is deperacted, please use `v1_page` instead.'
+        minimum: 1
+        maximum: 604
+      line_number:
+        type: integer
+        description: Line number in the Muhsaf for this word
+      audio_url:
+        type: string
+      location:
+        type: string
+      char_type_name:
+        type: string
+      code_v1:
+        type: string
+        description: glyph code that you can use to render the word using QCF  v1 font.
+      code_v2:
+        type: string
+        description: glyph code that you can use to render the word using QCF  v2 font.
+      translation:
+        type: object
+        properties:
+          text:
+            type: string
+          language_name:
+            type: string
+      transliteration:
+        type: object
+        properties:
+          text:
+            type: string
+          language_name:
+            type: string
+      v1_page:
+        type: integer
+        description: 'Madani Muhsaf Page number for v1 font. If `v1_page` value is 2, that means you''ll use page 2 font file to render this word using v1 glyph codes.'
+        minimum: 1
+        maximum: 604
+      v2_page:
+        type: integer
+        description: 'Madani Muhsaf Page number for v2 font. If `v2_page` value is 2, that means you''ll use page 2 font file to render this ayah using v2 glyph codes.'
+        minimum: 1
+        maximum: 604
+    required:
+      - position
+      - audio_url
+      - char_type_name
+      - translation
+      - transliteration
+    example:
+      id: 1
+      position: 1
+      text_uthmani: بِسْمِ
+      text_indopak: بِسۡمِ
+      text_imlaei: بِسْمِ
+      verse_key: '1:1'
+      page_number: 1
+      line_number: 2
+      audio_url: wbw/001_001_001.mp3
+      location: '1:1:1'
+      char_type_name: word
+      code_v1: '&#xfb51;'
+      translation:
+        text: In (the) name
+        language_name: english
+      transliteration:
+        text: bis'mi
+        language_name: english
+    x-stoplight:
+      id: word
+      name: Word
+      public: true
+  chapter:
+    title: Chapter
+    type: object
+    properties:
+      id:
+        type: integer
+      revelation_place:
+        type: string
+      revelation_order:
+        type: integer
+      bismillah_pre:
+        type: boolean
+      name_complex:
+        type: string
+      name_arabic:
+        type: string
+      verses_count:
+        type: integer
+      pages:
+        type: array
+        items:
+          type: integer
+      translated_name:
+        $ref: '#/definitions/translated-name'
+    required:
+      - translated_name
+    example:
+      id: 1
+      revelation_place: makkah
+      revelation_order: 5
+      bismillah_pre: false
+      name_complex: Al-Fātiĥah
+      name_arabic: الفاتحة
+      verses_count: 7
+      pages:
+        - 1
+        - 1
+      translated_name:
+        language_name: english
+        name: The Opener
+    x-stoplight:
+      id: chapter
+      name: Chapter
+      public: true
+  pagination:
+    title: Pagination
+    type: object
+    properties:
+      per_page:
+        type: integer
+        description: Entries per api call
+        default: 10
+      current_page:
+        type: integer
+        default: 1
+        description: ''
+      next_page:
+        type: integer
+        description: Next page in paginated result
+      total_pages=:
+        type: integer
+        description: Total number of pages
+      total_records=:
+        type: integer
+    example:
+      per_page: 1
+      current_page: 1
+      next_page: 2
+      total_pages=: 7
+      total_records=: 7
+    x-stoplight:
+      id: pagination
+      name: Pagination
+      public: true
+  juz:
+    title: Juz
+    type: object
+    properties:
+      id:
+        type: integer
+      juz_number:
+        type: integer
+        minimum: 1
+        maximum: 30
+        description: ''
+      first_verse_id:
+        type: integer
+        description: Id of the first ayah in this juz.
+      last_verse_id:
+        type: integer
+        description: Id of the last ayah in this juz.
+      verses_count:
+        type: integer
+        description: total verses in this juz
+      verse_mapping:
+        type: object
+        description: |-
+          Mapping of surah and range of ayah each juz has.
+
+          verse_mapping: {"1: "1-7", "2": "1-141"}
+
+          means this juz has 1-7 ayah of first surah, then 1-141 ayah of second surah.
+        properties:
+          '1':
+            type: string
+          '2':
+            type: string
+    required:
+      - verse_mapping
+    example:
+      juz_number: 1
+      first_verse_id: 1
+      last_verse_id: 148
+      verses_count: 148
+      verse_mapping:
+        '1': 1-7
+        '2': 1-141
+    x-stoplight:
+      id: juz
+      name: Juz
+      public: true
+x-stoplight:
+  version:
+    groups:
+      docs:
+        - name: Getting Started
+          description: null
+          divider: false
+          items:
+            - _id: introduction
+              type: docTextSections
+            - _id: get-notified
+              type: docTextSections
+            - _id: getting-content-in-other-languages
+              type: docTextSections
+            - _id: api-v3-v4-migration-guide
+              type: docTextSections
+        - divider: true
+          items: []
+          name: Routes
+        - name: Chapters
+          description: null
+          divider: false
+          items:
+            - _id: LIST-chapters
+              type: endpoints
+            - _id: GET-chapter
+              type: endpoints
+            - _id: info
+              type: endpoints
+        - name: Verses
+          description: |-
+            Get list of #model:J83wDRc48FrARPHBY
+
+            You can filter verses by `chapter`, `page`, `juz`, `rub-el-hizb`, `hizb`, `ruku` or `manzil`.
+          divider: false
+          items:
+            - _id: GET_verses-bychapter-chapternumber
+              type: endpoints
+            - _id: GET_verses-bypage-pagenumber
+              type: endpoints
+            - _id: GET_verses-byjuz-juznumber
+              type: endpoints
+            - _id: GET_verses-byhizb-hizbnumber
+              type: endpoints
+            - _id: GET_verses-byrub-rubnumber
+              type: endpoints
+            - _id: GET_verses-bykey-versekey
+              type: endpoints
+            - _id: GET_verses-random
+              type: endpoints
+            - _id: AoW5BcJzyBWe7x2Qb
+              type: endpoints
+        - name: Juz
+          description: null
+          divider: false
+          items:
+            - _id: GET_juzs
+              type: endpoints
+        - divider: false
+          items:
+            - _id: QURAN-verses-indopak
+              type: endpoints
+            - _id: YqaS25nwPQxYfP8Kn
+              type: endpoints
+            - _id: f2T4t5CBnkxwuWZ5Q
+              type: endpoints
+            - _id: QURAN-verses-uthmani
+              type: endpoints
+            - _id: jGs7wsHJiBXR6TcRc
+              type: endpoints
+            - _id: QURAN-verses-uthmani_simple
+              type: endpoints
+            - _id: QURAN-verses-uthmani
+              type: endpoints
+            - _id: QURAN-verses-Imlaei
+              type: endpoints
+            - _id: QURAN-verses-Imlaei
+              type: endpoints
+            - _id: recitations
+              type: endpoints
+            - _id: recitations
+              type: endpoints
+            - _id: recitations
+              type: endpoints
+            - _id: QURAN-verses-code_v1
+              type: endpoints
+            - _id: QURAN-verses-code_v2
+              type: endpoints
+          name: Quran
+          description: |-
+            All endpoints in this group are designed to fetch one complete translation, tafsir, recitation or ayah text of whole Quran.
+
+            You can download whole Clear Quran translation or Tasir ibe e Kathir in json format. We'll add more format later on, like down a sqlite dump instead of json.
+
+            If you don't need to fetch content of whole Quran, you can use query string to filter specific surah, pages, juz, hizb, rub el hizb, ruku or manzil as well.
+        - divider: false
+          items:
+            - _id: BFFudhky6dWQsF9we
+              type: endpoints
+          name: Tafsirs
+        - name: Tafsirs
+          description: null
+          divider: false
+          items:
+            - _id: b3WB4bKZfSWcw4e7m
+              type: endpoints
+            - _id: 5sRz3THY2vaZgZpof
+              type: endpoints
+        - divider: false
+          items:
+            - _id: eLvpfGQNAhncCxBdr
+              type: endpoints
+          name: Translations
+        - divider: false
+          items:
+            - _id: LIST-chapters
+              type: endpoints
+            - _id: LIST-chapters
+              type: endpoints
+            - _id: LIST-surah-recitation
+              type: endpoints
+            - _id: LIST-juz-recitaiton
+              type: endpoints
+            - _id: LIST-page-recitaiton
+              type: endpoints
+            - _id: LIST-rub-el-hizb-recitaiton
+              type: endpoints
+            - _id: LIST-hizb-recitaiton
+              type: endpoints
+            - _id: LIST-ayah-recitaiton
+              type: endpoints
+          name: Audio Recitations
+          description: |-
+            We've two types of audio recitatins
+
+            - Surah by Surah recitations #model:Qi27pabqjXibG5CtZ
+            - Ayah by Ayah recitations  #model:knzdXGgyjYnAqbhGX
+
+
+            For Surah by surah recitation you can get #endpoint:gXoJvTg6Zy2PwYQtS or #endpoint:YbBRBR9XF5JtYNLJP
+
+            For Ayah by ayah recitations, you can get recitation for:
+
+            - Specific ayah
+            - Surah
+            - Juz
+            - Madani Mushaf page
+        - name: Resources
+          description: null
+          divider: false
+          items:
+            - _id: recitations
+              type: endpoints
+            - _id: RECITATION-info
+              type: endpoints
+            - _id: translations
+              type: endpoints
+            - _id: RECITATION-info
+              type: endpoints
+            - _id: tafsirs
+              type: endpoints
+            - _id: TAFSIR-info
+              type: endpoints
+            - _id: RECITATION-styles
+              type: endpoints
+            - _id: languages
+              type: endpoints
+            - _id: CHAPTER-info
+              type: endpoints
+            - _id: VERSE-media
+              type: endpoints
+            - _id: recitations
+              type: endpoints
+        - name: Search
+          description: null
+          divider: false
+          items:
+            - _id: GET_search
+              type: endpoints
+        - name: Models
+          description: null
+          divider: false
+          items:
+            - _id: pagination
+              type: schemas
+            - _id: chapter
+              type: schemas
+            - _id: d3vNhGtgepN6JkpX9
+              type: schemas
+            - _id: chapter-info
+              type: schemas
+            - _id: chapter-recitation
+              type: schemas
+            - _id: chapter-reciters
+              type: schemas
+            - _id: verse
+              type: schemas
+            - _id: word
+              type: schemas
+            - _id: translation
+              type: schemas
+            - _id: transliteration
+              type: schemas
+            - _id: tafsir
+              type: schemas
+            - _id: audiofile
+              type: schemas
+            - _id: recitation
+              type: schemas
+            - _id: language
+              type: schemas
+            - _id: D2sPwqvz2Nhex4gxe
+              type: schemas
+            - _id: translated-name
+              type: schemas
+            - _id: media-content
+              type: schemas
+            - _id: author
+              type: schemas
+            - _id: resource
+              type: schemas
+            - _id: juz
+              type: schemas
+      traits: []
+      tests: []
+      savedEntries: []
+  functions: {}
+  textSections:
+    introduction:
+      id: introduction
+      name: Introduction
+      content: |-
+        <h1 align="center"> ﷽</h1>
+
+        ## Quran.com v4 api
+
+
+        Welcome to version 4 of Quran API. Below you will find list of the available resources in our API. If you need help or found any bug, please head over to our [repo](https://github.com/quran/quran.com-api) and open an issue.
+
+        #### Getting notified on api changes
+
+        If you're using quran.com api, please fill in your app information here #docTextSection:rAMuqXfkdWkjv2jmH
+      public: true
+    get-notified:
+      id: get-notified
+      name: Subscribe to Quran.com API updates
+      content: |-
+        # Get notified on api changes
+      public: true
+    getting-content-in-other-languages:
+      id: getting-content-in-other-languages
+      name: Getting content in other languages
+      content: |-
+        API by defult send Translated names of #model:aC7ed7aoTAZEKLCGF, #model:wc8vsnXdQpa7bpWa4, #model:sPq4bZJQ5hqar4gmB translation, and names of some other resources in English.
+      public: true
+    api-v3-v4-migration-guide:
+      id: api-v3-v4-migration-guide
+      name: API v3 → v4 Migration guide
+      public: true
+  mock:
+    enabled: false
+    dynamic: false
+x-tests: {}
