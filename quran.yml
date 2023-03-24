@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   version: v4
   title: Quran.com API
-  description: " Documentation of Quran.com v4 API"
+  description: "The Quran.com API provides access to various Quranic resources, including chapters (Surahs), verses (Ayahs), and Juzs. Users can retrieve information about specific chapters, verses, and Juzs, as well as perform searches for specific content within the Quran. The API also allows users to retrieve random verses and access Quranic content by page, Hizb, or verse key."
   contact:
     name: Quran.com
     url: "https://quran.com"
@@ -20,7 +20,7 @@ paths:
       summary: List Chapters
       tags:
         - Chapters
-      description: "Get list of #model:aC7ed7aoTAZEKLCGF."
+      description: "Retrieve a list of all chapters (Surahs) in the Quran."
 
       responses:
         "200":
@@ -36,7 +36,7 @@ paths:
     parameters:
       - name: id
         in: path
-        description: Chapter ID ( 1-114)
+        description: Chapter ID (1-114).
         required: true
         type: integer
         minimum: 1
@@ -46,7 +46,7 @@ paths:
       summary: Get Chapter
       tags:
         - Chapters
-      description: "Get details of a single #model:aC7ed7aoTAZEKLCGF."
+      description: "Retrieve details of a specific chapter (Surah) in the Quran using its chapter ID (1-114)."
 
       responses:
         "200":
@@ -56,7 +56,7 @@ paths:
     parameters:
       - name: chapter_number
         in: path
-        description: Chapter number ( 1  - 114 )
+        description: 'Chapter number (1-114).'
         required: true
         type: integer
         minimum: 1
@@ -66,7 +66,7 @@ paths:
       summary: By Chapter
       tags:
         - Verses
-      description: "Get list of #model:J83wDRc48FrARPHBY(s) by Chapter / Surah number."
+      description: "Retrieve a list of verses (Ayahs) from a specific chapter (Surah) using its chapter number (1-114)."
       parameters:
         - name: words
           in: query
@@ -84,12 +84,12 @@ paths:
 
         - name: page
           in: query
-          description: For paginating within the result
+          description: 'Page number for pagination (default: 1).'
           type: integer
           default: 1
         - name: per_page
           in: query
-          description: "records per api call, you can get maximum 50 records. "
+          description: "Records per API call, maximum 50 records (default: 10)."
           type: integer
           default: 10
           minimum: 1
@@ -102,7 +102,7 @@ paths:
     parameters:
       - name: page_number
         in: path
-        description: "Madani Mushaf page number. Valid range is 1-604 "
+        description: "Madani Mushaf page number (1-604)."
         required: true
         type: integer
         minimum: 1
@@ -114,7 +114,7 @@ paths:
       summary: By Page
       tags:
         - Verses
-      description: Get all verses of a specific Madani Mushaf page(1 to 604)
+      description: 'Retrieve all verses (Ayahs) from a specific Madani Mushaf page (1-604).'
       parameters:
         - name: words
           in: query
@@ -132,12 +132,12 @@ paths:
 
         - name: page
           in: query
-          description: For paginating within the result
+          description: 'Page number for pagination (default: 1).'
           type: integer
           default: 1
         - name: per_page
           in: query
-          description: "records per api call, you can get maximum 50 records. "
+          description: "Records per API call, maximum 50 records (default: 10)."
           type: integer
           default: 10
           minimum: 1
@@ -150,6 +150,7 @@ paths:
     parameters:
       - name: juz_number
         in: path
+        description: 'Juz number (1-30).'
         required: true
         type: integer
         minimum: 1
@@ -159,7 +160,7 @@ paths:
       summary: By Juz
       tags:
         - Verses
-      description: Get all verses from a specific juz(1-30).
+      description: 'Retrieve all verses (Ayahs) from a specific Juz (1-30).'
       parameters:
         - name: words
           in: query
@@ -177,12 +178,12 @@ paths:
 
         - name: page
           in: query
-          description: For paginating within the result
+          description: 'Page number for pagination (default: 1).'
           type: integer
           default: 1
         - name: per_page
           in: query
-          description: "records per api call, you can get maximum 50 records. "
+          description: "records per API call, maximum 50 records (default: 10)."
           type: integer
           default: 10
           minimum: 1
@@ -195,7 +196,7 @@ paths:
     parameters:
       - name: hizb_number
         in: path
-        description: Hizb number(1-60)
+        description: 'Hizb number (1-60).'
         required: true
         type: integer
         minimum: 1
@@ -205,7 +206,7 @@ paths:
       summary: By Hizb number
       tags:
         - Verses
-      description: Get all verses from a specific Hizb( half(1-60).
+      description: 'Retrieve all verses (Ayahs) from a specific Hizb (half) number (1-60).'
       parameters:
         - name: words
           in: query
@@ -223,12 +224,12 @@ paths:
 
         - name: page
           in: query
-          description: For paginating within the result
+          description: 'Page number for pagination (default: 1).'
           type: integer
           default: 1
         - name: per_page
           in: query
-          description: "records per api call, you can get maximum 50 records. "
+          description: "Records per API call, maximum 50 records (default: 10)."
           type: integer
           default: 10
           minimum: 1
@@ -241,7 +242,7 @@ paths:
     parameters:
       - name: verse_key
         in: path
-        description: "Verse key ( chapter:verse) "
+        description: 'Verse key in the format "chapter:verse".'
         required: true
         type: string
     get:
@@ -249,10 +250,7 @@ paths:
       summary: By Specific Verse By Key
       tags:
         - Verses
-      description: |-
-        Get a specific ayah with key, for exampke 10:5 is 5th ayah of 10th surah.
-
-
+      description: 'Retrieve a specific Ayah using its verse key (e.g., 10:5 for the 5th Ayah of the 10th Surah).'
       parameters:
         - name: words
           in: query
@@ -278,7 +276,7 @@ paths:
       summary: Get random ayah
       tags:
         - Verses
-      description: "Get a random verse."
+      description: 'Retrieve a random verse (Ayah) from the Quran.'
       parameters:
         - name: words
           in: query
@@ -304,7 +302,7 @@ paths:
       summary: Get All Juzs
       tags:
         - Juz
-      description: "Get list of all #model:XwogxNra8JdvchxBE"
+      description: "Retrieve a list of all Juzs in the Quran."
       responses:
         "200":
           description: ""
@@ -316,20 +314,20 @@ paths:
         - Search
       consumes:
         - application/json
-      description: "Search query, you can use *query* as well"
+      description: 'Perform a search query within the Quranic content.'
       parameters:
         - name: q
           in: query
-          description: "Search query, you can use *query* as well"
+          description: "Search query (can also use query)."
           type: string
         - name: size
           in: query
-          description: Results per page. *s* is also valid parameter.
+          description: 'Results per page (can also use s, default: 20).'
           type: number
           default: 20
         - name: page
           in: query
-          description: "Page number, well for pagination. You can use *p* as well"
+          description: "Page number for pagination (can also use p, default: 0)."
           type: number
           default: 0
 
@@ -339,10 +337,10 @@ paths:
 
 tags:
   - name: Search
-    description: Search
+    description: 'Search-related endpoints.'
   - name: Chapters
-    description: Chapters
+    description: 'Endpoints related to chapters (Surahs) in the Quran.'
   - name: Verses
-    description: Verses
+    description: 'Endpoints related to verses (Ayahs) in the Quran.'
   - name: Juz
-    description: Juz
+    description: 'Endpoints related to Juzs in the Quran.'
