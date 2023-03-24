@@ -70,10 +70,7 @@ paths:
       parameters:
         - name: words
           in: query
-          description: |-
-            Include words of each ayah?
-            0 or false will not include words.
-            1 or true will include the words.
+          description: 'Include words of each ayah? (true/false)'
           type: string
           default: "true"
           enum:
@@ -116,10 +113,7 @@ paths:
       parameters:
         - name: words
           in: query
-          description: |-
-            Include words of each ayah?
-            0 or false will not include words.
-            1 or true will include the words.
+          description: 'Include words of each ayah? (true/false)'
           type: string
           default: "true"
           enum:
@@ -160,10 +154,7 @@ paths:
       parameters:
         - name: words
           in: query
-          description: |-
-            Include words of each ayah?
-            0 or false will not include words.
-            1 or true will include the words.
+          description: 'Include words of each ayah? (true/false)'
           type: string
           default: "true"
           enum:
@@ -204,10 +195,7 @@ paths:
       parameters:
         - name: words
           in: query
-          description: |-
-            Include words of each ayah?
-            0 or false will not include words.
-            1 or true will include the words.
+          description: 'Include words of each ayah? (true/false)'
           type: string
           default: "true"
           enum:
@@ -246,10 +234,7 @@ paths:
       parameters:
         - name: words
           in: query
-          description: |-
-            Include words of each ayah?
-            0 or false will not include words.
-            1 or true will include the words.
+          description: 'Include words of each ayah? (true/false)'
           type: string
           default: "true"
           enum:
@@ -270,10 +255,7 @@ paths:
       parameters:
         - name: words
           in: query
-          description: |-
-            Include words of each ayah?
-            0 or false will not include words.
-            1 or true will include the words.
+          description: 'Include words of each ayah? (true/false)'
           type: string
           default: "true"
           enum:
